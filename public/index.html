@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ehe Treat - Delivery & Small Chops</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Ehe <span class="text-accent">Treat</span></h1>
+        <p>Your favorite small chops & meals, delivered.</p>
+    </header>
+
+    <main>
+        <section id="offers-section" style="display: none;">
+            <h2 class="text-accent">🔥 Special Offers</h2>
+            <div id="offers-container" class="grid"></div>
+        </section>
+
+        <section>
+            <h2>Our Menu</h2>
+            <div id="menu-container" class="grid">Loading menu...</div>
+        </section>
+
+        <section>
+            <h2>Our Services</h2>
+            <ul>
+                <li>Food for offices</li>
+                <li>Small get-togethers & house parties</li>
+                <li>Friends hangouts</li>
+                <li>Take orders and fast delivery</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Contact Us</h2>
+            <p><strong>WhatsApp:</strong> <a href="https://wa.me/234XXXXXXXXXX" class="text-accent">+234 XX XXX XXXX</a></p>
+            <p><strong>Phone:</strong> +234 XX XXX XXXX</p>
+            <p><strong>Email:</strong> order@ehetreat.com</p>
+        </section>
+    </main>
+
+    <script>
+        async function loadItems(endpoint, containerId, isOffer = false) {
+            try {
+                const res = await fetch(endpoint);
+                const data = await res.json();
+                const container = document.getElementById(containerId);
+                
+                if (data.length === 0) {
+                    if (isOffer) document.getElementById('offers-section').style.display = 'none';
+                    else container.innerHTML = '<p>Menu coming soon!</p>';
+                    return;
+                }
+
+                if (isOffer) document.getElementById('offers-section').style.display = 'block';
+                
+                container.innerHTML = data.map(item => `
+                    <div class="card">
+                        <img src="${item.image_url}" alt="${item.title}">
+                        <div class="card-content">
+                            <div class="card-title">${item.title}</div>
+                            ${isOffer && item.description ? `<p>${item.description}</p>` : ''}
+                            <div class="card-price">₦${item.price.toLocaleString()}</div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error("Failed to load:", error);
+            }
+        }
+
+        window.onload = () => {
+            loadItems('/api/offers', 'offers-container', true);
+            loadItems('/api/menu', 'menu-container');
+        };
+    </script>
+</body>
+</html>
