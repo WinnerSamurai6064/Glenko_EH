@@ -6,8 +6,8 @@ export default async (request, context) => {
     const path = url.pathname;
     const method = request.method;
 
-    // Connect to Neon & Netlify Blobs
-    const sql = neon(process.env.DATABASE_URL);
+    // Fixed: Using Netlify's new environment variable fetcher
+    const sql = neon(Netlify.env.get("DATABASE_URL"));
     const imageStore = getStore("images");
 
     // --- API: Public Routes ---
@@ -35,7 +35,9 @@ export default async (request, context) => {
     // --- API: Admin Protected Routes ---
     if (path.startsWith('/api/admin')) {
         const authHeader = request.headers.get('Authorization');
-        if (authHeader !== `Bearer ${process.env.ADMIN_PASSWORD}`) {
+        
+        // Fixed: Using Netlify's new environment variable fetcher here too
+        if (authHeader !== `Bearer ${Netlify.env.get("ADMIN_PASSWORD")}`) {
             return new Response('Unauthorized', { status: 401 });
         }
 
@@ -80,7 +82,6 @@ export default async (request, context) => {
     return new Response("Not Found", { status: 404 });
 }
 
-// Route all /api/* requests to this function
 export const config = {
     path: "/api/*"
 };
