@@ -1,45 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ehe Treat - Delivery & Small Chops</title>
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#FDF8F5',
+                            text: '#4A2E1B',
+                            accent: '#C67140',
+                            hover: '#A65A30'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #FDF8F5; }
+    </style>
 </head>
-<body>
-    <header>
-        <h1>Ehe <span class="text-accent">Treat</span></h1>
-        <p>Your favorite small chops & meals, delivered.</p>
+<body class="text-brand-text antialiased">
+
+    <header class="relative overflow-hidden bg-brand-bg pt-16 pb-12 px-6 text-center shadow-sm">
+        <div class="relative z-10 max-w-3xl mx-auto">
+            <svg class="w-20 h-20 mx-auto text-brand-text mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.092 2.019-.273 3-.161.89-.428 1.745-.789 2.545M9 7.5c0-1.5 1.5-3 3-3s3 1.5 3 3M6 14.25c-1.5 0-3-1.5-3-3s1.5-3 3-3"></path>
+            </svg>
+            <h1 class="text-5xl font-extrabold tracking-tight mb-3 text-brand-text">
+                Ehe <span class="text-brand-accent">Treat</span>
+            </h1>
+            <p class="text-lg opacity-80 mb-8 max-w-md mx-auto">Premium small chops & delicious meals, delivered right to your door.</p>
+            <a href="#menu" class="inline-block bg-brand-accent text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-brand-accent/30 hover:bg-brand-hover hover:-translate-y-1 transition-all duration-300">
+                View Menu
+            </a>
+        </div>
     </header>
 
-    <main>
-        <section id="offers-section" style="display: none;">
-            <h2 class="text-accent">🔥 Special Offers</h2>
-            <div id="offers-container" class="grid"></div>
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        
+        <section id="offers-section" style="display: none;" class="mb-16">
+            <div class="flex items-center gap-3 mb-6">
+                <svg class="w-8 h-8 text-brand-accent" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"></path></svg>
+                <h2 class="text-3xl font-bold text-brand-accent">Special Offers</h2>
+            </div>
+            <div id="offers-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
         </section>
 
-        <section>
-            <h2>Our Menu</h2>
-            <div id="menu-container" class="grid">Loading menu...</div>
+        <section id="menu" class="mb-20 scroll-mt-20">
+            <h2 class="text-3xl font-bold mb-8 flex items-center gap-2">
+                Our Menu
+                <div class="h-1 w-20 bg-brand-accent rounded-full ml-4"></div>
+            </h2>
+            <div id="menu-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-center text-lg text-brand-text/60">
+                Loading deliciousness...
+            </div>
         </section>
 
-        <section>
-            <h2>Our Services</h2>
-            <ul>
-                <li>Food for offices</li>
-                <li>Small get-togethers & house parties</li>
-                <li>Friends hangouts</li>
-                <li>Take orders and fast delivery</li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>Contact Us</h2>
-            <p><strong>WhatsApp:</strong> <a href="https://wa.me/234XXXXXXXXXX" class="text-accent">+234 XX XXX XXXX</a></p>
-            <p><strong>Phone:</strong> +234 XX XXX XXXX</p>
-            <p><strong>Email:</strong> order@ehetreat.com</p>
+        <section class="mb-20 bg-white rounded-3xl p-8 shadow-sm border border-brand-text/5">
+            <h2 class="text-2xl font-bold mb-8 text-center">We Cater For</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="p-4 rounded-2xl bg-brand-bg/50">
+                    <span class="text-3xl block mb-2">🏢</span>
+                    <h3 class="font-bold text-sm">Offices</h3>
+                </div>
+                <div class="p-4 rounded-2xl bg-brand-bg/50">
+                    <span class="text-3xl block mb-2">🎉</span>
+                    <h3 class="font-bold text-sm">House Parties</h3>
+                </div>
+                <div class="p-4 rounded-2xl bg-brand-bg/50">
+                    <span class="text-3xl block mb-2">👯‍♀️</span>
+                    <h3 class="font-bold text-sm">Hangouts</h3>
+                </div>
+                <div class="p-4 rounded-2xl bg-brand-bg/50">
+                    <span class="text-3xl block mb-2">🛵</span>
+                    <h3 class="font-bold text-sm">Fast Delivery</h3>
+                </div>
+            </div>
         </section>
     </main>
+
+    <footer class="bg-brand-text text-brand-bg py-12 px-6 rounded-t-3xl mt-auto">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-6">Ready to Order?</h2>
+            <p class="mb-8 opacity-80 max-w-md mx-auto">Send us a message on WhatsApp with your selections, and we'll get your order prepared fresh.</p>
+            
+            <a href="https://wa.me/2348000000000" target="_blank" class="inline-flex items-center gap-2 bg-[#25D366] text-white px-8 py-4 rounded-full font-bold shadow-lg hover:scale-105 transition-transform mb-8">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.373-.043c.104-.115.467-.547.591-.734.124-.187.248-.156.403-.098l1.268.595c.159.075.259.112.298.173.039.061.039.354-.105.759z"/></svg>
+                Chat on WhatsApp
+            </a>
+            
+            <div class="flex justify-center gap-6 text-sm opacity-60">
+                <p>📞 +234 800 000 0000</p>
+                <p>✉️ order@ehetreat.com</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
         async function loadItems(endpoint, containerId, isOffer = false) {
@@ -50,19 +111,23 @@
                 
                 if (data.length === 0) {
                     if (isOffer) document.getElementById('offers-section').style.display = 'none';
-                    else container.innerHTML = '<p>Menu coming soon!</p>';
+                    else container.innerHTML = '<p class="col-span-full">Menu coming soon!</p>';
                     return;
                 }
 
                 if (isOffer) document.getElementById('offers-section').style.display = 'block';
                 
                 container.innerHTML = data.map(item => `
-                    <div class="card">
-                        <img src="${item.image_url}" alt="${item.title}">
-                        <div class="card-content">
-                            <div class="card-title">${item.title}</div>
-                            ${isOffer && item.description ? `<p>${item.description}</p>` : ''}
-                            <div class="card-price">₦${item.price.toLocaleString()}</div>
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-brand-text/5 group">
+                        <div class="relative h-56 overflow-hidden">
+                            <img src="${item.image_url}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6 text-left">
+                            <h3 class="font-extrabold text-xl mb-2 text-brand-text">${item.title}</h3>
+                            ${isOffer && item.description ? `<p class="text-brand-text/70 text-sm mb-4 leading-relaxed">${item.description}</p>` : ''}
+                            <div class="flex justify-between items-center mt-4 pt-4 border-t border-brand-bg border-2">
+                                <span class="text-brand-accent font-black text-2xl">₦${item.price.toLocaleString()}</span>
+                            </div>
                         </div>
                     </div>
                 `).join('');
