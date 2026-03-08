@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ehe Treat - Admin Panel</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main>
+        <h1>Admin <span class="text-accent">Panel</span></h1>
+        
+        <div id="login-section" class="admin-panel">
+            <h2>Login</h2>
+            <input type="password" id="admin-pass" placeholder="Enter Admin Password">
+            <button onclick="login()">Login</button>
+        </div>
+
+        <div id="dashboard-section" style="display: none;">
+            <div class="admin-panel">
+                <h2>Add New Item</h2>
+                <select id="item-type">
+                    <option value="menu">Regular Menu Item</option>
+                    <option value="offers">Special Offer</option>
+                </select>
+                <input type="text" id="title" placeholder="Food Name / Offer Title" required>
+                <input type="number" id="price" placeholder="Price (₦)" required>
+                <textarea id="description" placeholder="Description (Only for offers)"></textarea>
+                <input type="file" id="image" accept="image/*" required>
+                <button onclick="addItem()">Upload & Save</button>
+                <p id="status-msg"></p>
+            </div>
+
+            <h2>Current Database</h2>
+            <div class="grid" id="admin-items"></div>
+        </div>
+    </main>
+
+    <script>
+        let token = '';
+
+        function login() {
+            token = document.getElementById('admin-pass').value;
+            if(token) {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('dashboard-section').style.display = 'block';
+                loadAdminItems();
+            }
+        }
+
+        async function addItem() {
+            const type = document.getElementById('item-type').value;
+            const formData = new FormData();
+            formData.append('title', document.getElementById('title').value);
+            formData.append('price', document.getElementById('price').value);
+            formData.append('description', document.getElementById('description').value);
+            formData.append('image', document.getElementById('image').files[0]);
+
+            const msg = document.getElementById('status-msg');
+            msg.innerText = "Uploading...";
+
+            try {
+                const res = await fetch(`/api/admin/${type}`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` },
+                    body: formData
+                });
+                
+                if (res.ok) {
+                    msg.innerText = "Added successfully!";
+                    loadAdminItems();
+                } else {
+                    msg.innerText = "Failed: " + await res.text();
+                }
+            } catch (e) {
+                msg.innerText = "Error uploading.";
+            }
+        }
+
+        async function loadAdminItems() {
+            const container = document.getElementById('admin-items');
+            container.innerHTML = 'Loading...';
+            
+            const [menuRes, offersRes] = await Promise.all([
+                fetch('/api/menu'), fetch('/api/offers')
+            ]);
+            const menu = await menuRes.json();
+            const offers = await offersRes.json();
+
+            let html = '';
+            const renderItem = (item, type) => `
+                <div class="card">
+                    <img src="${item.image_url}" alt="${item.title}">
+                    <div class="card-content">
+                        <span style="font-size:0.8rem; color:gray;">[${type.toUpperCase()}]</span>
+                        <div class="card-title">${item.title}</div>
+                        <div class="card-price">₦${item.price}</div>
+                        <button class="delete-btn" onclick="deleteItem(${item.id}, '${type}')">Delete</button>
+                    </div>
+                </div>
+            `;
+            
+            offers.forEach(item => html += renderItem(item, 'offers'));
+            menu.forEach(item => html += renderItem(item, 'menu'));
+            container.innerHTML = html;
+        }
+
+        async function deleteItem(id, type) {
+            if(!confirm("Are you sure you want to delete this?")) return;
+            await fetch(`/api/admin/${type}`, {
+                method: 'DELETE',
+                headers: { 
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id })
+            });
+            loadAdminItems();
+        }
+    </script>
+</body>
+</html>
